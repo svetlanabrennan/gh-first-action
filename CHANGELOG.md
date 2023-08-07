@@ -16,4 +16,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### 💥 Breaking changes
 
 ### 🚀 Enhancements
-Added a test txt file to test changelog action
