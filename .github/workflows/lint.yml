@@ -10,6 +10,9 @@ jobs:
   lint-changelog:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Check for unordered list in changelog
         run: |
           if grep -E "^\s*-\s" ./CHANGELOG.md; then
