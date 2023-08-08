@@ -39,11 +39,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check for unordered list in changelog
-        run: |
-          if grep -E "^\s*-\s" ./CHANGELOG.md; then
-            echo "Changelog is valid: Unordered list items found."
-          else
-            echo "Changelog is invalid: No unordered list items found."
-            exit 1
-          fi
+      - name: Check if CHANGELOG is valid
+        uses: newrelic/release-toolkit/validate-markdown@v1
+
+      # - name: Check for unordered list in changelog
+      #   run: |
+      #     if grep -E "^\s*-\s" ./CHANGELOG.md; then
+      #       echo "Changelog is valid: Unordered list items found."
+      #     else
+      #       echo "Changelog is invalid: No unordered list items found."
+      #       exit 1
+      #     fi
