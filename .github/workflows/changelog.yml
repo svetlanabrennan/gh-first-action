@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  changelog:
+  changelog-entry:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,6 +30,7 @@ jobs:
 
   lint-changelog:
     runs-on: ubuntu-latest
+    needs: changelog-entry
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
