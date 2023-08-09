@@ -6,13 +6,7 @@ name: changelog
 
 on:
   pull_request:
-    # types: [opened, synchronize, reopened, labeled, unlabeled]
-    # branches:
-    #   - main
 
-  push:
-    branches:
-      - main
 jobs:
   lint-changelog:
     runs-on: ubuntu-latest
