@@ -14,6 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Check for CHANGELOG file changes
+        shell: bash
         run: |
           # Only the latest commit of the feature branch is available
           # automatically. To diff with the base branch, we need to
