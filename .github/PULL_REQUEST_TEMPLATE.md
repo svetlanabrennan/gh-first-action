@@ -1,3 +1,11 @@
+---
+name: Pull Request
+about: Create a pull request
+branches:
+  exclude:
+    - 'renovate/*'
+---
+
 ## Which problem is this PR solving?
 
 Please include a summary of the change in your pr and what it's fixing. 
