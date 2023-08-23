@@ -27,6 +27,10 @@ jobs:
             echo "Please add a CHANGELOG entry to the appropriate header under \"Unreleased\"."
             false
           fi
+      - name: Debug Labels
+        run: |
+          echo "PR Labels: ${GITHUB_EVENT_PULL_REQUEST_LABELS}"
+          echo "Should Run: ${{ !contains(github.event.pull_request.labels.*.name, 'dependencies') && !contains(github.event.pull_request.labels.*.name, 'Skip Changelog')}}"
 
   lint-changelog:
     runs-on: ubuntu-latest
