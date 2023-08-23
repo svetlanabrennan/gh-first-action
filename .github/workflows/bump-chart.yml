@@ -14,8 +14,8 @@ jobs:
 
       - name: Update Chart Version
         run: |
-          yq e -i '.version="1.2.10"' Chart.yaml
-          yq e -i '.appVersion="5.6.10"' Chart.yaml
+          yq e -i '.version="1.2.11"' Chart.yaml
+          yq e -i '.appVersion="5.6.11"' Chart.yaml
 
       - name: Debug PAT
         run: |
@@ -30,16 +30,19 @@ jobs:
         run: |
           git add Chart.yaml
           git commit -m "Update version and appVersion"
-          git push origin ${{ github.event.repository.default_branch }}
+          git push
         env:
           PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v3
-      #   with:
-      #     token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      #     commit-message: "Update version and appVersion"
-      #     title: "Update version and appVersion"
-      #     body: "This pull request updates the version and appVersion fields in Chart.yaml"
-      #     branch: update-chart-version-${{ github.sha }}
-      #     base: main
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          commit-message: "Update version and appVersion"
+          title: "Update version and appVersion"
+          body: "This pull request updates the version and appVersion fields in Chart.yaml"
+          branch: update-chart-version-${{ github.sha }}
+          base: main
+
+
+  # git push origin ${{ github.event.repository.default_branch }}
