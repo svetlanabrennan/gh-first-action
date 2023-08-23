@@ -14,8 +14,8 @@ jobs:
 
       - name: Update Chart Version
         run: |
-          yq e -i '.version="1.2.11"' Chart.yaml
-          yq e -i '.appVersion="5.6.11"' Chart.yaml
+          yq e -i '.version="1.2.12"' Chart.yaml
+          yq e -i '.appVersion="5.6.12"' Chart.yaml
 
       - name: Debug PAT
         run: |
@@ -26,11 +26,13 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: Commit and Push Changes
+      - name: Commit Changes
         run: |
           git add Chart.yaml
           git commit -m "Update version and appVersion"
-          git push
+
+      - name: Push Changes
+        run: git push
         env:
           PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
