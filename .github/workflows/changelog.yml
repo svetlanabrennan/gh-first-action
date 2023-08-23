@@ -5,6 +5,8 @@ name: changelog
 
 on:
   pull_request:
+    branches-ignore:
+      - 'renovate/**'
 
 jobs:
   changelog-entry:
