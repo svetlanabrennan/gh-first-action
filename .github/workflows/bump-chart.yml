@@ -15,6 +15,7 @@ jobs:
       - name: Update Chart Version
         run: |
           yq e -i '.version="1.2.3"' Chart.yaml
+          yq e -i '.appVersion="5.6.7"' Chart.yaml
 
       - name: Debug PAT
         run: |
