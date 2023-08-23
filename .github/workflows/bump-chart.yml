@@ -3,6 +3,8 @@ name: Update Chart Version and Open Pull Request
 on:
   workflow_dispatch:
 
+permissions: write-all
+
 jobs:
   update-chart-version:
     runs-on: ubuntu-latest
