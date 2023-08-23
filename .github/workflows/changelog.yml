@@ -11,7 +11,7 @@ on:
 jobs:
   changelog-entry:
     runs-on: ubuntu-latest
-    # if: ${{ !contains(github.event.pull_request.labels.*.name, 'dependencies') && !contains(github.event.pull_request.labels.*.name, 'Skip Changelog')}}
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'dependencies') && !contains(github.event.pull_request.labels.*.name, 'Skip Changelog')}}
 
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +20,6 @@ jobs:
           echo "${{ toJson(github.event.pull_request.labels[*].name) }}"
           echo "Should Run: ${{ !contains(github.event.pull_request.labels.*.name, 'dependencies') && !contains(github.event.pull_request.labels.*.name, 'Skip Changelog')}}"
 
-      - uses: actions/checkout@v3
       - name: Check for CHANGELOG file changes
         run: |
           # Only the latest commit of the feature branch is available
@@ -35,6 +34,7 @@ jobs:
             echo "Please add a CHANGELOG entry to the appropriate header under \"Unreleased\", or add the \"Skip Changelog\" label if not required."
             false
           fi
+
   lint-changelog:
     runs-on: ubuntu-latest
     needs: changelog-entry
