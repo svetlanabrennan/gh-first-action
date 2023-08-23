@@ -12,7 +12,6 @@ jobs:
 
       - name: Update Chart Version
         run: |
-          # Assuming you have jq installed, this command will update version and appVersion
           jq '.version = "1.2.3" | .appVersion = "1.5.6"' Chart.yaml > Chart.yaml.tmp
           mv path/to/Chart.yaml.tmp path/to/Chart.yaml
 
