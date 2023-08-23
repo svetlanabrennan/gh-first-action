@@ -13,7 +13,7 @@ jobs:
       - name: Update Chart Version
         run: |
           jq '.version = "1.2.3" | .appVersion = "1.5.6"' Chart.yaml > Chart.yaml.tmp
-          mv path/to/Chart.yaml.tmp path/to/Chart.yaml
+          mv Chart.yaml.tmp Chart.yaml
 
       - name: Commit and Push Changes
         run: |
