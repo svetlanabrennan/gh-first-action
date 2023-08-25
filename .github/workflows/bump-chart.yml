@@ -49,17 +49,18 @@ jobs:
 
       - name: Run version update reusable workflow
         id: run-reusable
-        run: |
-          chmod +x ./.github/workflows/version-bump/version-update.yml
-          ./.github/workflows/version-bump/version-update.yml
-        env:
+        # run: |
+        #   chmod +x ./.github/workflows/version-bump/version-update.yml
+        #   ./.github/workflows/version-bump/version-update.yml
+        uses: ./.github/workflows/version-bump/version-update.yml
+        with:
           currentVersion: $APP_VERSION
           currentAppVersion: $ORIGINAL_APP_VERSION
           updatedAppVersion: $UPDATED_APP_VERSION
 
-      - name: Set new version
-        run: |
-          echo "new version is: ${{ steps.run-reusable.outputs.newVersion }}"
+      # - name: Set new version
+      #   run: |
+      #     echo "new version is: ${{ steps.run-reusable.outputs.newVersion }}"
 
       # - name: Calculate Version Difference
       #   run: |
