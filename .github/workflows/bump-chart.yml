@@ -25,10 +25,12 @@ jobs:
           # echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
           echo "NEW_VERSION=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
 
-      - name: Set NEW_VERSION output
-        id: set-new-version
-        run: echo "NEW_VERSION=${DOCKER_IMAGE_TAG}"
-
+      - name: Create artifact
+        id: create-artifact
+        run: |
+          mkdir -p artifacts
+          echo "NEW_VERSION=${DOCKER_IMAGE_TAG}" > artifacts/new_version.txt
+        continue-on-error: true
 
   open-pr:
     name: Update version and appVersion and open pr
@@ -38,9 +40,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ needs.find-chart-version.outputs.create-artifact }}
+
       - name: Debug new version
         run: |
-          echo "new version is: ${{ needs.find-chart-version.outputs.NEW_VERSION }}"
+          echo "new version is: $(cat artifacts/new_version.txt)"
 
       - name: Current appVersion
         run: |
