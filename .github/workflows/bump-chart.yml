@@ -28,11 +28,10 @@ jobs:
     steps:
       - name: Update chart
         run: |
-          echo docker tag v2 is: ${{ env.DOCKER_IMAGE_TAG}}
-          # yq e -i '.appVersion=echo $DOCKER_IMAGE_TAG' ${{ env.CHART_DIRECTORY }}/Chart.yaml
-          # UPDATED_APP_VERSION=$(yq e '.appVersion' "${{ env.CHART_DIRECTORY }}/Chart.yaml")
-          # echo "Updated appVersion: $UPDATED_APP_VERSION"
-          # echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
+          yq e -i '.appVersion="1.1.1"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          UPDATED_APP_VERSION=$(yq e '.appVersion' "${{ env.CHART_DIRECTORY }}/Chart.yaml")
+          echo "Updated appVersion: $UPDATED_APP_VERSION"
+          echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
 
       - name: Debug PAT
         run: |
@@ -47,6 +46,11 @@ jobs:
         run: |
           git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
           git commit -m "Update version and appVersion"
+
+      - name: Open pull request
+        run: gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion'
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Changes
         run: git push
