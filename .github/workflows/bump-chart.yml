@@ -30,10 +30,10 @@ jobs:
           echo "ORIGINAL_APP_VERSION=$ORIGINAL_APP_VERSION" >> $GITHUB_ENV
         id: original_version
 
-      - name: Update appVersion chart
-        run: |
-          echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
-          yq e -i '.appVersion="2.3.0"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+      # - name: Update appVersion chart
+      #   run: |
+      #     echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
+      #     yq e -i '.appVersion="2.3.0"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Capture updated appversion
         run: |
@@ -64,7 +64,8 @@ jobs:
 
       - name: Update version helm chart
         run: |
-          echo $(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
+          # echo $(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
+          yq e -i '.appVersion="2.3.0"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
           yq e -i '.version="${{ steps.run-reusable.outputs.newVersion }}"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Configure Git
