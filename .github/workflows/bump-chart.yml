@@ -61,6 +61,7 @@ jobs:
       - name: Set new version
         run: |
           echo "new version is: ${{ steps.run-reusable.outputs.newVersion }}"
+          echo "all outputs are ${{ steps.run-reusable.outputs }}"
 
 
       # - name: Calculate Version Difference
