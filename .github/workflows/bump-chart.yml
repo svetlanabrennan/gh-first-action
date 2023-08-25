@@ -9,6 +9,7 @@ env:
   CHART_DIRECTORY: 'charts/test-chart'
   TEST_VERSION: 'v1.5.7'
   DOCKER_IMAGE_TAG: ""
+  ORIGINAL_VERSION: ""
 
 jobs:
   find-chart-version:
@@ -25,9 +26,9 @@ jobs:
       - name: Current version
         run: |
           ORIGINAL_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
-          # echo "Original appVersion: $ORIGINAL_APP_VERSION"
           echo "original app version is: $ORIGINAL_APP_VERSION"
-          echo "originalTest=$ORIGINAL_APP_VERSION" >> "GITHUB_OUTPUT"
+          echo "ORIGINAL_APP_VERSION=$ORIGINAL_APP_VERSION" >> $GITHUB_ENV
+          # echo "originalTest=$ORIGINAL_APP_VERSION" >> "GITHUB_OUTPUT"
         id: original_version
 
       - name: Update appVersion chart
@@ -44,7 +45,7 @@ jobs:
       - name: Calculate Version Difference
         run: |
           # echo "updated version: ${{ steps.updated_version.outputs.updated_version }}"
-          echo "original version: ${{ steps.original_version.outputs.originalTest }}"
+          echo "Using ORIGINAL_APP_VERSION: $ORIGINAL_APP_VERSION"
           # DIFFERENCE=$(python -c "print(${{ steps.updated_version.outputs.updated_version }} - ${{ steps.original_version.outputs.original_version }})")
           # echo "App version difference: $DIFFERENCE"
 
