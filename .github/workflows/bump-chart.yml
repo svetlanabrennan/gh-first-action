@@ -26,6 +26,7 @@ jobs:
         run: |
           ORIGINAL_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           # echo "Original appVersion: $ORIGINAL_APP_VERSION"
+          echo "original app version is: $ORIGINAL_APP_VERSION"
           echo "originalTest=$ORIGINAL_APP_VERSION" >> "GITHUB_OUTPUT"
         id: original_version
 
