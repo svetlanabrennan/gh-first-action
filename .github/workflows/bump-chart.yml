@@ -29,9 +29,6 @@ jobs:
       - name: Update chart
         run: |
           yq e -i '.appVersion="1.1.1"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
-          UPDATED_APP_VERSION=$(yq e '.appVersion' "${{ env.CHART_DIRECTORY }}/Chart.yaml")
-          echo "Updated appVersion: $UPDATED_APP_VERSION"
-          echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
 
       - name: Debug PAT
         run: |
