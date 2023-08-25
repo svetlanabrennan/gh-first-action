@@ -36,6 +36,3 @@ runs:
         version=$(node ./version-update.js ${{ inputs.currentVersion }} ${{ inputs.currentAppVersion }} ${{ inputs.updatedAppVersion }})
         echo "::set-output name=step-result::$version"
         echo "step-result=$version" >> $GITHUB_ENV
-
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
