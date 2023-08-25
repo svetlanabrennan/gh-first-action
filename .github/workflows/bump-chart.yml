@@ -43,15 +43,16 @@ jobs:
           git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
           git commit -m "Update version and appVersion"
 
+      - name: Push Changes
+        run: git push
+        env:
+          PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
       - name: Open pull request
         run: gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push Changes
-        run: git push
-        env:
-          PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       # - name: Create Pull Request
       #   uses: peter-evans/create-pull-request@v3
