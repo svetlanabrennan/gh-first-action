@@ -33,6 +33,7 @@ runs:
       shell: bash
       id: set-new-version
       run: |
+        ls
         version=$(node version-update.js ${{ inputs.currentVersion }} ${{ inputs.currentAppVersion }} ${{ inputs.updatedAppVersion }})
         echo "::set-output name=step-result::$version"
         echo "step-result=$version" >> $GITHUB_ENV
