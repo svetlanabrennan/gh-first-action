@@ -1,0 +1,44 @@
+name: Version Update
+
+on: workflow_call
+
+inputs:
+  currentVersion:
+    description: The current helm chart version.
+    required: true
+    type: string
+  currentAppVersion:
+    description: The current app version.
+    required: true
+    type: string
+  updatedAppVersion:
+    description: The next app version.
+    required: true
+    type: string
+outputs:
+  newVersion:
+    description: The new helm chart version.
+    value: ${{ jobs.update-version.outputs.result }}
+jobs:
+  update-version:
+    outputs:
+      result: ${{ steps.set-new-version.outputs.step-result }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run Version Update
+        id: set-new-version
+        run: |
+          version=$(node ./version-update.js ${{ inputs.version }} ${{ inputs.current }} ${{ inputs.updated }})
+          echo "step-result=$version" >> $GITHUB_OUTPUT
+          # node ./version-update.js ${{ github.event.inputs.version }} ${{ github.event.inputs.current }} ${{ github.event.inputs.updated }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

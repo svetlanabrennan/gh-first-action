@@ -23,7 +23,7 @@ jobs:
           DOCKER_IMAGE_TAG=$(echo "${TEST_VERSION}" | sed 's/^v//')
           echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
 
-      - name: Current version
+      - name: Current appvVersion
         run: |
           ORIGINAL_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           echo "original app version is: $ORIGINAL_APP_VERSION"
@@ -35,25 +35,38 @@ jobs:
           echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
           yq e -i '.appVersion="2.3.0"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
-      - name: Capture updated version
+      - name: Capture updated appversion
         run: |
           UPDATED_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           echo "updated appVersion: $UPDATED_APP_VERSION"
           echo "UPDATED_APP_VERSION=$UPDATED_APP_VERSION" >> $GITHUB_ENV
 
-
-      - name: Calculate Version Difference
+      - name: Capture helm chart version
         run: |
-          echo "Using ORIGINAL_APP_VERSION: $ORIGINAL_APP_VERSION"
-          echo "Using UPDATED_APP_VERSION: $UPDATED_APP_VERSION"
-          if [[ "$MY_VARIABLE" =~ ^[0-9]+$ ]]; then
-            echo "MY_VARIABLE is an integer."
-          else
-            echo "MY_VARIABLE is not an integer."
-          fi
-          # DIFFERENCE=$(python -c "print($ORIGINAL_APP_VERSION - $UPDATED_APP_VERSION)")
-          DIFFERENCE=$(node -e "console.log(parseFloat('${ORIGINAL_APP_VERSION}') - parseFloat('${UPDATED_APP_VERSION}'))")
-          echo "App version difference: $DIFFERENCE"
+          APP_VERSION=$(yq eval '.version' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
+          echo "version: $APP_VERSION"
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+
+      - name: Run version update reusable workflow
+        id: run-reusable
+        uses: ./.github/workflows/version-bump/version-update.yml
+        with:
+          currentVersion: $APP_VERSION
+          currentAppVersion: $ORIGINAL_APP_VERSION
+          updatedAppVersion: $UPDATED_APP_VERSION
+
+      - name: Set new version
+        run: |
+          echo "new version is: ${{ steps.run-reusable.outputs.newVersion }}"
+
+      # - name: Calculate Version Difference
+      #   run: |
+      #     echo "Using ORIGINAL_APP_VERSION: $ORIGINAL_APP_VERSION"
+      #     echo "Using UPDATED_APP_VERSION: $UPDATED_APP_VERSION"
+ 
+      #     # DIFFERENCE=$(python -c "print($ORIGINAL_APP_VERSION - $UPDATED_APP_VERSION)")
+      #     DIFFERENCE=$(node -e "console.log(parseFloat('${ORIGINAL_APP_VERSION}') - parseFloat('${UPDATED_APP_VERSION}'))")
+      #     echo "App version difference: $DIFFERENCE"
 
       # - name: Debug PAT
       #   run: |
