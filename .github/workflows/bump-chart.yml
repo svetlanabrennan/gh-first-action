@@ -47,7 +47,7 @@ jobs:
           echo "Using ORIGINAL_APP_VERSION: $ORIGINAL_APP_VERSION"
           echo "Using UPDATED_APP_VERSION: $UPDATED_APP_VERSION"
           # DIFFERENCE=$(python -c "print($ORIGINAL_APP_VERSION - $UPDATED_APP_VERSION)")
-          DIFFERENCE=$(node -e "console.log($ORIGINAL_APP_VERSION - $UPDATED_APP_VERSION)")
+          DIFFERENCE=$(node -e "console.log(parseFloat($ORIGINAL_APP_VERSION) - parseFloat($UPDATED_APP_VERSION))")
           echo "App version difference: $DIFFERENCE"
 
       # - name: Debug PAT
