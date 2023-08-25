@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Update chart
         run: |
-          yq e -i '.appVersion="echo $DOCKER_IMAGE_TAG"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          yq e -i '.appVersion=echo $DOCKER_IMAGE_TAG' ${{ env.CHART_DIRECTORY }}/Chart.yaml
           UPDATED_APP_VERSION=$(yq e '.appVersion' "${{ env.CHART_DIRECTORY }}/Chart.yaml")
           echo "Updated appVersion: $UPDATED_APP_VERSION"
           echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
