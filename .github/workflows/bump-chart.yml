@@ -38,10 +38,10 @@ jobs:
           echo "ORIGINAL_APP_VERSION=$ORIGINAL_APP_VERSION" >> $GITHUB_ENV
         id: original_version
 
-      - name: Update appVersion chart
-        run: |
-          echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
-           yq e -i '.appVersion=\"${NEW_VERSION}\""' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+      # - name: Update appVersion chart
+      #   run: |
+      #     echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
+      #      yq e -i '.appVersion=\"${NEW_VERSION}\""' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Capture updated appversion
         run: |
