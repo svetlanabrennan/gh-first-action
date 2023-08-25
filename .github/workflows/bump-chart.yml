@@ -19,13 +19,14 @@ jobs:
       - name: Set the versions in envs
         run: |
           DOCKER_IMAGE_TAG=$(echo "${TEST_VERSION}" | sed 's/^v//')
-          echo docker tag is: "DOCKER_IMAGE_TAG"
           echo docker tag v2 is: "$DOCKER_IMAGE_TAG"
 
       - name: Update Chart Version
         run: |
           yq e -i '.appVersion=$DOCKER_IMAGE_TAG' ${{ env.CHART_DIRECTORY }}/Chart.yaml
-          echo ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          UPDATED_APP_VERSION=$(yq e '.appVersion' "${{ env.CHART_DIRECTORY }}/Chart.yaml")
+          echo "Updated appVersion: $UPDATED_APP_VERSION"
+          echo chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Debug PAT
         run: |
