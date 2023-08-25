@@ -34,7 +34,7 @@ jobs:
 
   open-pr:
     name: Update version and appVersion and open pr
-    needs: [ find-chart-version ]
+    needs: [find-chart-version]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -43,7 +43,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ needs.find-chart-version.outputs.create-artifact }}
+          name: find-chart-version-artifact
 
       - name: Debug new version
         run: |
