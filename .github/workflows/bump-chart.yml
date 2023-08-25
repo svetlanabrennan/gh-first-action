@@ -7,9 +7,8 @@ permissions: write-all
 
 env:
   CHART_DIRECTORY: 'charts/test-chart'
-  TEST_VERSION: 'v1.5.7'
-  DOCKER_IMAGE_TAG: ""
-  ORIGINAL_VERSION: ""
+  TEST_VERSION: "2.2.3"
+  NEW_VERSION: ""
 
 jobs:
   find-chart-version:
@@ -21,9 +20,18 @@ jobs:
       - name: Find Chart Version
         run: |
           DOCKER_IMAGE_TAG=$(echo "${TEST_VERSION}" | sed 's/^v//')
-          echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
+          # echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
+          echo "NEW_VERSION=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
 
-      - name: Current appvVersion
+  open-pr:
+    name: Update version and appVersion and open pr
+    needs: [ docker-integration ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Current appVersion
         run: |
           ORIGINAL_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           echo "original app version is: $ORIGINAL_APP_VERSION"
@@ -33,7 +41,7 @@ jobs:
       - name: Update appVersion chart
         run: |
           echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
-          yq e -i '.appVersion="2.3.0"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+           yq e -i '.appVersion=\"${NEW_VERSION}\""' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Capture updated appversion
         run: |
@@ -49,9 +57,6 @@ jobs:
 
       - name: Run version update reusable workflow
         id: run-reusable
-        # run: |
-        #   chmod +x ./.github/workflows/version-bump/version-update.yml
-        #   ./.github/workflows/version-bump/version-update.yml
         uses: ./.github/actions/version-bump
         with:
           currentVersion: $APP_VERSION
