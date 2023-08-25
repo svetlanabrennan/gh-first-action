@@ -51,6 +51,7 @@ jobs:
 
       - name: Capture helm chart version
         run: |
+          echo "new version is: ${{ env.NEW_VERSION }}"
           APP_VERSION=$(yq eval '.version' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           echo "version: $APP_VERSION"
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
@@ -61,7 +62,7 @@ jobs:
         with:
           currentVersion: $APP_VERSION
           currentAppVersion: $ORIGINAL_APP_VERSION
-          updatedAppVersion: $NEW_VERSION
+          updatedAppVersion: ${{ env.NEW_VERSION }}
 
       - name: Set new version
         run: |
