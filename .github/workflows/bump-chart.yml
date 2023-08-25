@@ -60,8 +60,7 @@ jobs:
 
       - name: Set new version
         run: |
-          echo "new version is: ${{ steps.run-reusable.outputs.newVersion }}"
-          echo "all outputs are ${{ steps.run-reusable.outputs }}"
+          echo "new version to set is: ${{ steps.run-reusable.outputs.newVersion }}"
 
 
       # - name: Calculate Version Difference

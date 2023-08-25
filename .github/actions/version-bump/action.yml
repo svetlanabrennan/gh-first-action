@@ -38,5 +38,5 @@ runs:
         # echo "::set-output name=step-result::$version"
         # echo "step-result=$version" >> $GITHUB_ENV
         # echo "step-result=$version" >> $GITHUB_OUTPUT
+        # echo "new version is: $version"
         echo "newVersion=$version" >> $GITHUB_OUTPUT
-        echo "new version is: $version"
