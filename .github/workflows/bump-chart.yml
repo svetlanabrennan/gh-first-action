@@ -25,7 +25,7 @@ jobs:
       - name: Current version
         run: |
           ORIGINAL_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
-          # echo "$ORIGINAL_APP_VERSION" >> $GITHUB_OUTPUT
+          echo "Original appVersion: $ORIGINAL_APP_VERSION"
         id: original_version
 
       - name: Update appVersion chart
@@ -36,7 +36,7 @@ jobs:
       - name: Capture updated version
         run: |
           UPDATED_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
-          echo "$UPDATED_APP_VERSION" >> $GITHUB_OUTPUT
+          echo "Original appVersion: $UPDATED_APP_VERSION"
         id: updated_version
 
       - name: Calculate Version Difference
