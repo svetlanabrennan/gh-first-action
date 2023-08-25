@@ -41,6 +41,8 @@ jobs:
 
       - name: Calculate Version Difference
         run: |
+          echo "updated version: ${{ steps.updated_version.outputs.updated_version }}"
+          echo "original version: ${{ steps.original_version.outputs.original_version }}"
           DIFFERENCE=$(python -c "print(${{ steps.updated_version.outputs.updated_version }} - ${{ steps.original_version.outputs.original_version }})")
           echo "App version difference: $DIFFERENCE"
 
