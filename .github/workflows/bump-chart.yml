@@ -28,8 +28,6 @@ jobs:
           ORIGINAL_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           echo "original app version is: $ORIGINAL_APP_VERSION"
           echo "ORIGINAL_APP_VERSION=$ORIGINAL_APP_VERSION" >> $GITHUB_ENV
-          # echo "originalTest=$ORIGINAL_APP_VERSION" >> "GITHUB_OUTPUT"
-        id: original_version
 
       - name: Update appVersion chart
         run: |
@@ -40,16 +38,13 @@ jobs:
         run: |
           UPDATED_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           echo "updated appVersion: $UPDATED_APP_VERSION"
-          echo "UPDATED_APP_VERSION=$UPDATED_APP_VERSION" >> $GITHUB_ENV
-        id: updated_version
 
       - name: Calculate Version Difference
         run: |
-          # echo "updated version: ${{ steps.updated_version.outputs.updated_version }}"
           echo "Using ORIGINAL_APP_VERSION: $ORIGINAL_APP_VERSION"
-           echo "Using UPDATED_APP_VERSION: $UPDATED_APP_VERSION"
-          # DIFFERENCE=$(python -c "print(${{ steps.updated_version.outputs.updated_version }} - ${{ steps.original_version.outputs.original_version }})")
-          # echo "App version difference: $DIFFERENCE"
+          echo "Using UPDATED_APP_VERSION: $UPDATED_APP_VERSION"
+          # DIFFERENCE=$(python -c "print($UPDATED_APP_VERSION - $ORIGINAL_APP_VERSION)")
+          echo "App version difference: $DIFFERENCE"
 
       # - name: Debug PAT
       #   run: |
