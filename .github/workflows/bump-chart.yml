@@ -37,6 +37,8 @@ jobs:
           name: testing-artifact
           path: artifacts/new_version.txt
 
+      - name: List artifact contents
+        run: ls -R artifacts
   open-pr:
     name: Update version and appVersion and open pr
     needs: [find-chart-version]
