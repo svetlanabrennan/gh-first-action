@@ -53,7 +53,7 @@ jobs:
           name: testing-artifact
 
       - name: List artifact contents in open-pr step
-        run: ls -R artifacts
+        run: ls
 
       - name: Debug new version
         run: |
