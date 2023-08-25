@@ -42,7 +42,7 @@ jobs:
           git commit -m "Update version and appVersion"
 
       - name: Open pull request
-        run: gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion'
+        run: gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
