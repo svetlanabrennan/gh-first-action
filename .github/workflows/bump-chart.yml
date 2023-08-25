@@ -23,6 +23,7 @@ jobs:
 
   update-chart-version:
     runs-on: ubuntu-latest
+    needs: [find-chart-version]
     steps:
       - name: Update chart
         run: |
