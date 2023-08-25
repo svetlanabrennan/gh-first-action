@@ -43,11 +43,12 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: find-chart-version-artifact
+          name: create-artifact
 
       - name: Debug new version
         run: |
-          echo "new version is: $(cat artifacts/new_version.txt)"
+          echo "new version is: $(cat create-artifact/artifacts/new_version.txt)"
+
 
       - name: Current appVersion
         run: |
