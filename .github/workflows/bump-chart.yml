@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Update chart
         run: |
-          yq e -i '.appVersion="1.1.1"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          yq e -i '.appVersion="1.1.1"' Chart.yaml
 
       - name: Debug PAT
         run: |
@@ -41,7 +41,7 @@ jobs:
 
       - name: Commit Changes
         run: |
-          git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          git add Chart.yaml
           git commit -m "Update version and appVersion"
 
       - name: Open pull request
