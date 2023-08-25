@@ -16,14 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Set the versions in envs
+      - name: Update Chart Version
         run: |
           DOCKER_IMAGE_TAG=$(echo "${TEST_VERSION}" | sed 's/^v//')
           echo docker tag v2 is: "$DOCKER_IMAGE_TAG"
-
-      - name: Update Chart Version
-        run: |
-          yq e -i '.appVersion=DOCKER_IMAGE_TAG' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          yq e -i '.appVersion=$DOCKER_IMAGE_TAG' ${{ env.CHART_DIRECTORY }}/Chart.yaml
           UPDATED_APP_VERSION=$(yq e '.appVersion' "${{ env.CHART_DIRECTORY }}/Chart.yaml")
           echo "Updated appVersion: $UPDATED_APP_VERSION"
           echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
