@@ -46,6 +46,11 @@ jobs:
         run: |
           echo "Using ORIGINAL_APP_VERSION: $ORIGINAL_APP_VERSION"
           echo "Using UPDATED_APP_VERSION: $UPDATED_APP_VERSION"
+          if [[ "$MY_VARIABLE" =~ ^[0-9]+$ ]]; then
+            echo "MY_VARIABLE is an integer."
+          else
+            echo "MY_VARIABLE is not an integer."
+          fi
           # DIFFERENCE=$(python -c "print($ORIGINAL_APP_VERSION - $UPDATED_APP_VERSION)")
           DIFFERENCE=$(node -e "console.log(parseFloat('${ORIGINAL_APP_VERSION}') - parseFloat('${UPDATED_APP_VERSION}'))")
           echo "App version difference: $DIFFERENCE"
