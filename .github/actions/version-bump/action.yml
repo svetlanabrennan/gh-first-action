@@ -1,5 +1,7 @@
 name: Version Update
-description: Update the version number.
+
+description: Updates version and returns the new version
+
 inputs:
   currentVersion:
     description: The current helm chart version.
@@ -10,31 +12,30 @@ inputs:
   updatedAppVersion:
     description: The next app version.
     required: true
+
 outputs:
   newVersion:
     description: The new helm chart version.
-    value: ${{ jobs.update-version.outputs.result }}
-# runs:
-#   using: 'composite'
-#   steps:
-#     outputs:
-#       result: ${{ steps.set-new-version.outputs.step-result }}
-#     runs-on: ubuntu-latest
+    value: ${{ steps.set-new-version.outputs.step-result }}
 
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
 
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 18
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-#       - name: Run Version Update
-#         id: set-new-version
-#         run: |
-#           version=$(node ./version-update.js ${{ inputs.version }} ${{ inputs.current }} ${{ inputs.updated }})
-#           echo "step-result=$version" >> $GITHUB_OUTPUT
-#           # node ./version-update.js ${{ github.event.inputs.version }} ${{ github.event.inputs.current }} ${{ github.event.inputs.updated }}
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run Version Update
+      shell: bash
+      id: set-new-version
+      run: |
+        version=$(node ./version-update.js ${{ inputs.currentVersion }} ${{ inputs.currentAppVersion }} ${{ inputs.updatedAppVersion }})
+        echo "::set-output name=step-result::$version"
+        echo "step-result=$version" >> $GITHUB_ENV
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

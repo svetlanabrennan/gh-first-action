@@ -52,7 +52,7 @@ jobs:
         # run: |
         #   chmod +x ./.github/workflows/version-bump/version-update.yml
         #   ./.github/workflows/version-bump/version-update.yml
-        uses: ./.github/workflows/version-bump/version-update.yml
+        uses: ./.github/actions/version-bump
         with:
           currentVersion: $APP_VERSION
           currentAppVersion: $ORIGINAL_APP_VERSION
