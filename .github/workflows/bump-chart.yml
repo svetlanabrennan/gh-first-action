@@ -25,7 +25,7 @@ jobs:
 
   open-pr:
     name: Update version and appVersion and open pr
-    needs: [ docker-integration ]
+    needs: [ find-chart-version ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
