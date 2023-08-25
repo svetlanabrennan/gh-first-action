@@ -34,6 +34,6 @@ runs:
       id: set-new-version
       run: |
         ls
-        version=$(node version-update.js ${{ inputs.currentVersion }} ${{ inputs.currentAppVersion }} ${{ inputs.updatedAppVersion }})
+        version=$(node ./.github/actions/version-bump/version-update.js ${{ inputs.currentVersion }} ${{ inputs.currentAppVersion }} ${{ inputs.updatedAppVersion }})
         echo "::set-output name=step-result::$version"
         echo "step-result=$version" >> $GITHUB_ENV
