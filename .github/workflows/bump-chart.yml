@@ -19,11 +19,11 @@ jobs:
       - name: Set the versions in envs
         run: |
           DOCKER_IMAGE_TAG=$(echo "${TEST_VERSION}" | sed 's/^v//')
-          echo "${DOCKER_IMAGE_TAG}"
+          echo "DOCKER_IMAGE_TAG"
 
       - name: Update Chart Version
         run: |
-          yq e -i ".appVersion=$DOCKER_IMAGE_TAG" "${{ env.CHART_DIRECTORY }}/Chart.yaml"
+          yq e -i '.appVersion=$DOCKER_IMAGE_TAG' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Debug PAT
         run: |
