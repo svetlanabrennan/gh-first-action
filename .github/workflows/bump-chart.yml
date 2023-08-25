@@ -52,6 +52,9 @@ jobs:
         with:
           name: testing-artifact
 
+      - name: List artifact contents in open-pr step
+        run: ls -R artifacts
+
       - name: Debug new version
         run: |
           echo "new version is: $(cat testing-artifact/new_version.txt)"
