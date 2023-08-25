@@ -39,13 +39,15 @@ jobs:
       - name: Capture updated version
         run: |
           UPDATED_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
-          echo "Original appVersion: $UPDATED_APP_VERSION"
+          echo "updated appVersion: $UPDATED_APP_VERSION"
+          echo "UPDATED_APP_VERSION=$UPDATED_APP_VERSION" >> $GITHUB_ENV
         id: updated_version
 
       - name: Calculate Version Difference
         run: |
           # echo "updated version: ${{ steps.updated_version.outputs.updated_version }}"
           echo "Using ORIGINAL_APP_VERSION: $ORIGINAL_APP_VERSION"
+           echo "Using UPDATED_APP_VERSION: $UPDATED_APP_VERSION"
           # DIFFERENCE=$(python -c "print(${{ steps.updated_version.outputs.updated_version }} - ${{ steps.original_version.outputs.original_version }})")
           # echo "App version difference: $DIFFERENCE"
 
