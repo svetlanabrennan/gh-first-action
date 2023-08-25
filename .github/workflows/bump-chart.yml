@@ -62,6 +62,10 @@ jobs:
         run: |
           echo "new version to set is: ${{ steps.run-reusable.outputs.newVersion }}"
 
+      - name: Update version helm chart
+        run: |
+          yq e -i '.version=${{ steps.run-reusable.outputs.newVersion }}' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+
 
       # - name: Calculate Version Difference
       #   run: |
@@ -76,24 +80,24 @@ jobs:
       #   run: |
       #     echo "PAT: $PAT"
 
-      # - name: Configure Git
-      #   run: |
-      #     git config user.name "${{ github.actor }}"
-      #     git config user.email "${{ github.actor }}@users.noreply.github.com"
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
 
-      # - name: Commit Changes
-      #   run: |
-      #     git checkout -b update-chart-version-${{ github.sha }} origin/main
-      #     git branch -a
-      #     git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
-      #     git commit -m "Update version and appVersion"
+      - name: Commit Changes
+        run: |
+          git checkout -b update-chart-version-${{ github.sha }} origin/main
+          git branch -a
+          git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          git commit -m "Update version and appVersion"
 
-      # - name: Push Changes
-      #   run: git push origin update-chart-version-${{ github.sha }}
-      #   env:
-      #     PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: Push Changes
+        run: git push origin update-chart-version-${{ github.sha }}
+        env:
+          PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      # - name: Open pull request
-      #   run: gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion'
-      #   env:
-      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Open pull request
+        run: gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion'
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
