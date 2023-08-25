@@ -26,7 +26,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [find-chart-version]
     steps:
+      - name: Debug Directory Contents
+        run: |
+          ls -R $CHART_DIRECTORY
       - name: Update chart
+        working-directory: ${{ env.CHART_DIRECTORY }}
         run: |
           yq e -i '.appVersion="1.1.1"' Chart.yaml
 
@@ -41,7 +45,7 @@ jobs:
 
       - name: Commit Changes
         run: |
-          git add Chart.yaml
+          git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
           git commit -m "Update version and appVersion"
 
       - name: Open pull request
