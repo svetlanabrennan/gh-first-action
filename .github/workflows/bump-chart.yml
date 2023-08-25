@@ -30,16 +30,28 @@ jobs:
           echo "ORIGINAL_APP_VERSION=$ORIGINAL_APP_VERSION" >> $GITHUB_ENV
         id: original_version
 
-      # - name: Update appVersion chart
-      #   run: |
-      #     echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
-      #     yq e -i '.appVersion="2.3.0"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+      - name: Update appVersion chart
+        run: |
+          echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
+          yq e -i '.appVersion="2.3.0"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Capture updated appversion
         run: |
           UPDATED_APP_VERSION=$(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           echo "updated appVersion: $UPDATED_APP_VERSION"
           echo "UPDATED_APP_VERSION=$UPDATED_APP_VERSION" >> $GITHUB_ENV
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Commit Changes
+        run: |
+          git checkout -b update-chart-version-${{ github.sha }} origin/main
+          git branch -a
+          git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          git commit -m "Update appVersion"
 
       - name: Capture helm chart version
         run: |
@@ -65,17 +77,16 @@ jobs:
       - name: Update version helm chart
         run: |
           # echo $(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
-          yq e -i '.appVersion="2.3.0"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
           yq e -i '.version="${{ steps.run-reusable.outputs.newVersion }}"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
-      - name: Configure Git
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
+      # - name: Configure Git
+      #   run: |
+      #     git config user.name "${{ github.actor }}"
+      #     git config user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Commit Changes
         run: |
-          git checkout -b update-chart-version-${{ github.sha }} origin/main
+          git checkout update-chart-version-${{ github.sha }} origin/main
           git branch -a
           git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
           git commit -m "Update version and appVersion"
