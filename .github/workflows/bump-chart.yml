@@ -36,7 +36,7 @@ jobs:
 
       - name: Commit Changes
         run: |
-          git add Chart.yaml
+          git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
           git commit -m "Update version and appVersion"
 
       - name: Push Changes
