@@ -26,13 +26,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [find-chart-version]
     steps:
-      - name: Debug Directory Contents
-        run: |
-          ls -R $CHART_DIRECTORY
       - name: Update chart
-        working-directory: ${{ env.CHART_DIRECTORY }}
         run: |
-          yq e -i '.appVersion="1.1.1"' Chart.yaml
+          echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
+          yq e -i '.appVersion="$DOCKER_IMAGE_TAG"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Debug PAT
         run: |
