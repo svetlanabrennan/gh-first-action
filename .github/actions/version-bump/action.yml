@@ -16,7 +16,7 @@ inputs:
 outputs:
   newVersion:
     description: The new helm chart version.
-    value: ${{ steps.set-new-version.outputs.step-result }}
+    value: ${{ steps.set-new-version.outputs.newVersion }}
 
 runs:
   using: "composite"
@@ -37,4 +37,5 @@ runs:
         version=$(node ./.github/actions/version-bump/version-update.js ${{ inputs.currentVersion }} ${{ inputs.currentAppVersion }} ${{ inputs.updatedAppVersion }})
         # echo "::set-output name=step-result::$version"
         # echo "step-result=$version" >> $GITHUB_ENV
-        echo "step-result=$version" >> $GITHUB_OUTPUT
+        # echo "step-result=$version" >> $GITHUB_OUTPUT
+        echo "newVersion=$version" >> $GITHUB_OUTPUT
