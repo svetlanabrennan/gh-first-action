@@ -64,7 +64,7 @@ jobs:
 
       - name: Update version helm chart
         run: |
-          yq e -i '.appVersion="echo $UPDATED_APP_VERSION"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          yq e -i '.appVersion="${{echo $UPDATED_APP_VERSION}}"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
           yq e -i '.version="${{ steps.run-reusable.outputs.newVersion }}"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
           echo $(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
 
