@@ -49,8 +49,8 @@ jobs:
 
       - name: Run version update reusable workflow
         id: run-reusable
-        uses: ./.github/workflows/version-bump/version-update.yml
-        with:
+        run: ./.github/workflows/version-bump/version-update.yml
+        env:
           currentVersion: $APP_VERSION
           currentAppVersion: $ORIGINAL_APP_VERSION
           updatedAppVersion: $UPDATED_APP_VERSION
