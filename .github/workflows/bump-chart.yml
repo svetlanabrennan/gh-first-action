@@ -29,7 +29,7 @@ jobs:
       - name: Update chart
         run: |
           echo "Chart path is: ${{ env.CHART_DIRECTORY }}/Chart.yaml"
-          yq e -i '.appVersion="$DOCKER_IMAGE_TAG"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          yq e -i '.appVersion=1.1.1' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Debug PAT
         run: |
