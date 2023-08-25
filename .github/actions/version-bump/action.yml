@@ -39,3 +39,4 @@ runs:
         # echo "step-result=$version" >> $GITHUB_ENV
         # echo "step-result=$version" >> $GITHUB_OUTPUT
         echo "newVersion=$version" >> $GITHUB_OUTPUT
+        echo "new version is: $version"
