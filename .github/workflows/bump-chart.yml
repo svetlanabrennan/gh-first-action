@@ -64,21 +64,7 @@ jobs:
 
       - name: Update version helm chart
         run: |
-          yq e -i '.version=${{ steps.run-reusable.outputs.newVersion }}' ${{ env.CHART_DIRECTORY }}/Chart.yaml
-
-
-      # - name: Calculate Version Difference
-      #   run: |
-      #     echo "Using ORIGINAL_APP_VERSION: $ORIGINAL_APP_VERSION"
-      #     echo "Using UPDATED_APP_VERSION: $UPDATED_APP_VERSION"
- 
-      #     # DIFFERENCE=$(python -c "print($ORIGINAL_APP_VERSION - $UPDATED_APP_VERSION)")
-      #     DIFFERENCE=$(node -e "console.log(parseFloat('${ORIGINAL_APP_VERSION}') - parseFloat('${UPDATED_APP_VERSION}'))")
-      #     echo "App version difference: $DIFFERENCE"
-
-      # - name: Debug PAT
-      #   run: |
-      #     echo "PAT: $PAT"
+          yq e -i '.version="${{ steps.run-reusable.outputs.newVersion }}"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
 
       - name: Configure Git
         run: |
