@@ -14,50 +14,34 @@ jobs:
   find-chart-version:
     runs-on: ubuntu-latest
     outputs:
-      NEW_VERSION: ${{ steps.set-new-version.outputs.NEW_VERSION }}
+      new-version: ${{ steps.set-new-version.outputs.new-version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       
       - name: Find Chart Version
+        id: set-new-version
         run: |
           DOCKER_IMAGE_TAG=$(echo "${TEST_VERSION}" | sed 's/^v//')
           # echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
-          echo "NEW_VERSION=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
+          # echo "NEW_VERSION=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
+          echo "::set-output new-version=test::hello"
 
-      - name: Create artifact
-        run: |
-          mkdir -p artifacts
-          echo "NEW_VERSION=${DOCKER_IMAGE_TAG}" > artifacts/new_version.txt
-        continue-on-error: true
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: testing-artifact
-          path: artifacts/new_version.txt
-
-      - name: List artifact contents
-        run: ls -R artifacts
   open-pr:
-    name: Update version and appVersion and open pr
+    # name: Update version and appVersion and open pr
     needs: [find-chart-version]
     runs-on: ubuntu-latest
     steps:
+      # - env:
+      #   OUTPUT1: ${{ needs.find-chart-version.outputs.new-version }}
+        
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: testing-artifact
-
-      - name: List artifact contents in open-pr step
-        run: ls
-
-      - name: Debug new version
+      - name: Debug version
         run: |
-          echo "new version is: $(cat testing-artifact/new_version.txt)"
+          echo "new version is: ${{ needs.find-chart-version.outputs.new-version }}"
 
       - name: Current appVersion
         run: |
