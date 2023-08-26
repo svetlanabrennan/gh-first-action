@@ -73,7 +73,7 @@ jobs:
         with:
           currentVersion: $APP_VERSION
           currentAppVersion: $ORIGINAL_APP_VERSION
-          updatedAppVersion: ${{ needs.find-chart-version.outputs.new-version }}
+          updatedAppVersion: $TEST_VERSION
 
       - name: Set new version
         run: |
