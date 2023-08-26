@@ -39,7 +39,7 @@ jobs:
         id: check-version
         run: |
           # echo "new version is: ${{ needs.find-chart-version.outputs.new-version }}"
-          echo ${{ needs.find-chart-version.outputs.new-version }}
+          echo "new version from needs steps is: ${{ needs.find-chart-version.outputs.new-version }}"
           echo "NEW_VERSION=${{ needs.find-chart-version.outputs.new-version }}" >> $GITHUB_ENV
           echo "debug version is: $NEW_VERSION"
 
