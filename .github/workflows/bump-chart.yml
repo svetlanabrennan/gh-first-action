@@ -62,7 +62,6 @@ jobs:
 
       - name: Capture helm chart version
         run: |
-          echo "new version is: ${{ env.NEW_VERSION }}"
           APP_VERSION=$(yq eval '.version' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           echo "version: $APP_VERSION"
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
@@ -81,7 +80,7 @@ jobs:
 
       - name: Update version helm chart
         run: |
-          yq e -i ".appVersion=\"${NEW_VERSION}\"" "${{ env.CHART_DIRECTORY }}/Chart.yaml"
+          yq e -i ".appVersion=\"${TEST_VERSION}\"" "${{ env.CHART_DIRECTORY }}/Chart.yaml"
           yq e -i '.version="${{ steps.run-reusable.outputs.newVersion }}"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
           echo $(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
 
