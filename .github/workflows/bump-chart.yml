@@ -8,7 +8,6 @@ permissions: write-all
 env:
   CHART_DIRECTORY: 'charts/test-chart'
   TEST_VERSION: "2.3.0"
-  NEW_VERSION: ""
 
 jobs:
   find-chart-version:
@@ -33,14 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Debug version
-        id: check-version
+        id: find-version
         run: |
-          echo "new version from needs steps is: ${{ needs.find-chart-version.outputs.new-version }}"
           echo "TEST_VERSION=${{ needs.find-chart-version.outputs.new-version }}" >> $GITHUB_ENV
-          echo "debug version is: $TEST_VERSION"
 
       - name: Current appVersion
         run: |
@@ -91,6 +88,12 @@ jobs:
           PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Open pull request
-        run: gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion'
+        run: |
+          gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge pull request
+        run: gh pr merge ${{ github.event.pull_request.number }} --squash --auto --merge-msg "Merged by automation"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
