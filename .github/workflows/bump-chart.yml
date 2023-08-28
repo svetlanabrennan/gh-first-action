@@ -94,6 +94,6 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge pull request
-        run: gh pr merge ${{ github.event.pull_request.number }} --squash --auto --merge-msg "Merged by automation"
+        run: gh pr merge ${{ github.event.pull_request.number }} --squash --auto --body "Merged by automation"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
