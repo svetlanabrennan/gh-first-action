@@ -89,11 +89,14 @@ jobs:
 
       - name: Open pull request
         run: |
-          gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion'
+          pr_output=$(gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion')
+          pr_number=$(echo "$pr_output" | grep -oP 'Created pull request #\K\d+')
+          echo "Created pull request number: $pr_number"
+                
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge pull request
-        run: gh pr merge ${{ github.event.pull_request.number }} --squash --auto --body "Merged by automation"
+        run: gh pr merge $pr_number --squash --auto --body "Merged by automation"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
