@@ -89,10 +89,9 @@ jobs:
 
       - name: Open pull request
         run: |
-          pr_output=$(gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion')
-          pr_number=$(echo "$pr_output" | grep -oP 'Created pull request #\K\d+')
+          pr_url=$(gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion')
+          pr_number=$(basename $pr_url)
           echo "Created pull request number: $pr_number"
-                
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
