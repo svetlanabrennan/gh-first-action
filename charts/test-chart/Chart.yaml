@@ -1,5 +1,5 @@
 apiVersion: v2
 name: nri-metadata-injection
 description: A Helm chart to deploy the New Relic metadata injection webhook.
-version: 4.4.1
-appVersion: 2.2.2
+version: 4.5.0
+appVersion: 2.3.0
