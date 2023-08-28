@@ -93,12 +93,13 @@ jobs:
           echo $pr_url
           pr_number=$(basename $pr_url)
           echo "Created pull request number: $pr_number"
+          gh pr merge $pr_number --squash --auto --body "Merged by automation"
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Merge pull request
-        run: |
-          echo "pr number is $pr_number"
-          gh pr merge $pr_number --squash --auto --body "Merged by automation"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Merge pull request
+      #   run: |
+      #     echo "pr number is $pr_number"
+      #     gh pr merge $pr_number --squash --auto --body "Merged by automation"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
