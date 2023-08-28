@@ -7,7 +7,7 @@ permissions: write-all
 
 env:
   CHART_DIRECTORY: 'charts/test-chart'
-  TEST_VERSION: "2.3.0"
+  TEST_VERSION: "2.3.1"
 
 jobs:
   find-chart-version:
@@ -93,7 +93,7 @@ jobs:
           echo $pr_url
           pr_number=$(basename $pr_url)
           echo "Created pull request number: $pr_number"
-          gh pr merge $pr_number --squash --auto --body "Merged by automation"
+          gh pr merge $pr_number --squash --auto --delete-branch --body "Merged by automation"
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
