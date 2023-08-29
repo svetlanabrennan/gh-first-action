@@ -29,6 +29,6 @@ function getVersionDifferenceTypeAndIncrement(version, current, updated) {
 const [, , version, current, updated] = process.argv;
 // return getVersionDifferenceTypeAndIncrement(version, current, updated);
 let result = getVersionDifferenceTypeAndIncrement(version, current, updated);
-console.log(result)
+console.log("error")
 // return result;
 // console.log(`::set-output newVersion=result::${result.difference_type}`);
