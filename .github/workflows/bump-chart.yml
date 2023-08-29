@@ -65,17 +65,21 @@ jobs:
           echo "new version to set is: ${{ steps.run-reusable.outputs.newVersion }}"
 
       - name: Update version helm chart
+        id: update-helm-chart
+        if: steps.run-reusable.outputs.newVersion != 'error'
         run: |
           yq e -i ".appVersion=\"${TEST_VERSION}\"" "${{ env.CHART_DIRECTORY }}/Chart.yaml"
           yq e -i '.version="${{ steps.run-reusable.outputs.newVersion }}"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
           echo $(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
 
       - name: Configure Git
+        if: steps.update-helm-chart.success
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Commit Changes
+        if: steps.update-helm-chart.success
         run: |
           git checkout -b update-chart-version-${{ github.sha }} origin/main
           git branch -a
@@ -83,17 +87,21 @@ jobs:
           git commit -m "Update version and appVersion"
 
       - name: Push Changes
+        if: steps.update-helm-chart.success
         run: git push origin update-chart-version-${{ github.sha }}
         env:
           PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Open pull request
+        if: steps.update-helm-chart.success
         run: |
-          pr_url=$(gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion')
-          echo $pr_url
-          pr_number=$(basename $pr_url)
-          echo "Created pull request number: $pr_number"
-          gh pr merge $pr_number --squash --auto --delete-branch --body "Merged by automation"
+          # pr_url=$(gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion')
+          # echo $pr_url
+          # pr_number=$(basename $pr_url)
+          # echo "Created pull request number: $pr_number"
+          # gh pr merge $pr_number --squash --auto --delete-branch --body "Merged by automation"
+          gh pr create -B main -H update-chart-version-${{ github.sha }} --title 'Bump appVersion' --body 'Bumping appVersion'
+
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
