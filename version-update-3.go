@@ -57,5 +57,7 @@ func main() {
 
 	result := getVersionDifferenceTypeAndIncrement(version, current, updated)
 	fmt.Println(result)
-	fmt.Printf("::set-output name=result::%s\n", result)
+	// fmt.Printf("::set-output name=result::%s\n", result)
+	// fmt.Printf(`"{result}={result}" >> $GITHUB_OUTPUT`)
+	fmt.Printf(`"%s=%s" >> $GITHUB_OUTPUT`, "result", result)
 }
