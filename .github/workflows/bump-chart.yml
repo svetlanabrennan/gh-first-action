@@ -101,6 +101,15 @@ jobs:
             exit 1
           fi
 
+      - name: Setup Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: 'v3.7.0'  # Adjust the Helm version if needed
+
+      - name: Run Helm Docs
+        run: |
+          helm-docs
+
       - name: Configure Git
         run: |
           git config user.name "${{ github.actor }}"
@@ -110,7 +119,8 @@ jobs:
         run: |
           git checkout -b update-chart-version-${{ github.sha }} origin/main
           git branch -a
-          git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          # git add ${{ env.CHART_DIRECTORY }}/Chart.yaml
+          git add .
           git commit -m "Update version and appVersion"
 
       - name: Push Changes
