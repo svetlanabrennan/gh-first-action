@@ -76,7 +76,9 @@ jobs:
 
       - name: Run version update reusable workflow
         id: run-reusable
-        run: echo "FOO=$(go run version-update-3.go \"$APP_VERSION\" \"$ORIGINAL_APP_VERSION\" \"$TEST_VERSION\")" >> $GITHUB_ENV
+        # run: echo "FOO=$(go run version-update-3.go \"$APP_VERSION\" \"$ORIGINAL_APP_VERSION\" \"$TEST_VERSION\")" >> $GITHUB_ENV
+        run: go run version-update-3.go $APP_VERSION $ORIGINAL_APP_VERSION $TEST_VERSION
+
 
       - name: Set new version
         run: |
