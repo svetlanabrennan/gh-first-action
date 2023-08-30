@@ -67,7 +67,7 @@ jobs:
 
       - name: Run version update reusable workflow
         id: run-reusable
-        run: node version-update-2.js --currentVersion ${{ env.APP_VERSION }} --currentAppVersion ${{ env.ORIGINAL_APP_VERSION }} --updatedAppVersion ${{ env.TEST_VERSION }}
+        run: node version-update-2.js $APP_VERSION $ORIGINAL_APP_VERSION $TEST_VERSION
 
       - name: Set new version
         run: |
