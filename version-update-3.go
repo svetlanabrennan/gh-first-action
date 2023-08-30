@@ -46,6 +46,7 @@ func getVersionDifferenceTypeAndIncrement(version, current, updated string) stri
 func main() {
 	args := os.Args
 	fmt.Println("args are", args)
+	fmt.Println("arg length", len(args))
 	if len(args) != 4 {
 		fmt.Println("Usage: program version current updated")
 		os.Exit(1)
@@ -56,8 +57,8 @@ func main() {
 	updated := args[3]
 
 	result := getVersionDifferenceTypeAndIncrement(version, current, updated)
-	// fmt.Println(result)
+	fmt.Println(result)
 	// fmt.Printf("::set-output name=result::%s\n", result)
 	// fmt.Printf(`"{result}={result}" >> $GITHUB_OUTPUT`)
-	fmt.Printf(`"%s=%s" >> GITHUB_OUTPUT`, "result", result)
+	// fmt.Printf(`"%s=%s" >> GITHUB_OUTPUT`, "result", result)
 }
