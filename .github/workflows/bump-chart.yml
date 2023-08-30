@@ -71,7 +71,8 @@ jobs:
 
       - name: Set new version
         run: |
-          echo "new version to set is: ${{ steps.run-reusable.outputs.newVersion }}"
+          # echo "new version to set is: ${{ steps.run-reusable.outputs.newVersion }}"
+          echo "new version to set is: ${{ steps.run-reusable.outputs.result }}"
 
       - name: Update version helm chart
         run: |
