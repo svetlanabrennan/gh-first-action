@@ -76,13 +76,13 @@ jobs:
 
       - name: Run version update reusable workflow
         id: run-reusable
-        run: go run version-update-3.go $APP_VERSION $ORIGINAL_APP_VERSION $TEST_VERSION
-
+        run: echo "FOO=$(go run version-update-3.go $APP_VERSION $ORIGINAL_APP_VERSION $TEST_VERSION)" >> $GITHUB_ENV
 
       - name: Set new version
         run: |
           # echo "new version to set is: ${{ steps.run-reusable.outputs.newVersion }}"
           echo "new version to set is: ${{ steps.run-reusable.outputs.result }}"
+          echo "using foo as version: $FOO"
 
       - name: Update version helm chart
         run: |
