@@ -94,7 +94,7 @@ jobs:
         run: |
           if [ "${{ steps.run-reusable.outputs.newVersion }}" != 'error' ]; then
             yq e -i ".appVersion=\"${TEST_VERSION}\"" "${{ env.CHART_DIRECTORY }}/Chart.yaml"
-            yq e -i '.version="${{ steps.run-reusable.outputs.result }}"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
+            yq e -i '.version="\$RESULT\"' ${{ env.CHART_DIRECTORY }}/Chart.yaml
             echo $(yq eval '.appVersion' ${{ env.CHART_DIRECTORY }}/Chart.yaml)
           else
             echo "Error: newVersion is 'error'."
