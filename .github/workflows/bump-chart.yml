@@ -7,7 +7,7 @@ permissions: write-all
 
 env:
   CHART_DIRECTORY: 'charts/test-chart'
-  TEST_VERSION: "2.3.2"
+  TEST_VERSION: "2.4.2"
 
 jobs:
   find-chart-version:
