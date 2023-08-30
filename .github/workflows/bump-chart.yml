@@ -81,7 +81,7 @@ jobs:
         run: |
           RESULT=$(go run version-update-3.go "$APP_VERSION" "$ORIGINAL_APP_VERSION" "$TEST_VERSION")
           echo "Result is: $RESULT"
-          # echo "RESULT=$RESULT" >> $GITHUB_ENV
+          echo "RESULT=$RESULT" >> $GITHUB_ENV
           # echo "::set-output name=result::$result"
 
       - name: Set new version
