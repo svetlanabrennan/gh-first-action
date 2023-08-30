@@ -16,27 +16,29 @@ inputs:
 outputs:
   newVersion:
     description: The new helm chart version.
-    value: ${{ steps.set-new-version.outputs.newVersion }}
+    # value: ${{ steps.set-new-version.outputs.newVersion }}
 
 runs:
-  using: "composite"
-  steps:
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14
+  using: 'node16'
+  main: './.github/actions/version-bump/version-update.js'
+  # using: "composite"
+  # steps:
+  #   - name: Set up Node.js
+  #     uses: actions/setup-node@v2
+  #     with:
+  #       node-version: 14
 
-    - name: Checkout code
-      uses: actions/checkout@v2
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
 
-    - name: Run Version Update
-      shell: bash
-      id: set-new-version
-      run: |
-        ls
-        version=$(node ./.github/actions/version-bump/version-update.js ${{ inputs.currentVersion }} ${{ inputs.currentAppVersion }} ${{ inputs.updatedAppVersion }})
-        # echo "::set-output name=step-result::$version"
-        # echo "step-result=$version" >> $GITHUB_ENV
-        # echo "step-result=$version" >> $GITHUB_OUTPUT
-        # echo "new version is: $version"
-        echo "newVersion=$version" >> $GITHUB_OUTPUT
+  #   - name: Run Version Update
+  #     shell: bash
+  #     id: set-new-version
+  #     run: |
+  #       ls
+  #       version=$(node ./.github/actions/version-bump/version-update.js ${{ inputs.currentVersion }} ${{ inputs.currentAppVersion }} ${{ inputs.updatedAppVersion }})
+  #       # echo "::set-output name=step-result::$version"
+  #       # echo "step-result=$version" >> $GITHUB_ENV
+  #       # echo "step-result=$version" >> $GITHUB_OUTPUT
+  #       # echo "new version is: $version"
+  #       echo "newVersion=$version" >> $GITHUB_OUTPUT
