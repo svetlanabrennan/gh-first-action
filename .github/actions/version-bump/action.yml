@@ -20,7 +20,7 @@ outputs:
 
 runs:
   using: 'node16'
-  main: './.github/actions/version-bump/version-update.js'
+  main: 'version-update.js'
   # using: "composite"
   # steps:
   #   - name: Set up Node.js
