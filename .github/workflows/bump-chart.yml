@@ -68,11 +68,14 @@ jobs:
       - name: Run version update reusable workflow
         id: run-reusable
         run: node version-update-2.js $APP_VERSION $ORIGINAL_APP_VERSION $TEST_VERSION
+        env:
+          RESULT: ${{ steps.run-reusable-outputs.result}}
 
       - name: Set new version
         run: |
           # echo "new version to set is: ${{ steps.run-reusable.outputs.newVersion }}"
-          echo "new version to set is: ${{ steps.run-reusable.outputs.result }}"
+          # echo "new version to set is: ${{ steps.run-reusable.outputs.result }}"
+          echo "new version: $RESULT"
 
       - name: Update version helm chart
         run: |

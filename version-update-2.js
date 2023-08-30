@@ -26,13 +26,13 @@ function getVersionDifferenceTypeAndIncrement(version, current, updated) {
   }
 }
 
-console.log('process argv:', process.argv)
+// console.log('process argv:', process.argv)
 
 const version = process.argv[2];
 const current = process.argv[3];
 const updated = process.argv[4];
-console.log('version', version)
-console.log("current", current)
-console.log("updated", updated)
+// console.log('version', version)
+// console.log("current", current)
+// console.log("updated", updated)
 let result = getVersionDifferenceTypeAndIncrement(version, current, updated);
 console.log(result);
