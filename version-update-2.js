@@ -36,3 +36,4 @@ const updated = process.argv[4];
 // console.log("updated", updated)
 let result = getVersionDifferenceTypeAndIncrement(version, current, updated);
 console.log(result);
+console.log(`::set-output name=result::${result}`); // Capture the result as an output
