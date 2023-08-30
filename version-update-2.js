@@ -1,6 +1,3 @@
-// const core = require('@actions/core');
-// const github = require('@actions/github');
-
 function incrementMajorVersion(versionSegments) {
   return `${Number(versionSegments[0]) + 1}.0.0`;
 }
@@ -29,16 +26,6 @@ function getVersionDifferenceTypeAndIncrement(version, current, updated) {
   }
 }
 
-// try {
-//   const version = core.getInput('currentVersion')
-//   const current = core.getInput('currentAppVersion')
-//   const updated = core.getInput("updatedAppVersion")
-//   const result = getVersionDifferenceTypeAndIncrement(version, current, updated);
-//   core.setOutput("newVersion", result)
-// } catch (error) {
-//   core.setFailed(error.message)
-// }
-
 const [, , version, current, updated] = process.argv;
 let result = getVersionDifferenceTypeAndIncrement(version, current, updated);
-console.log("error")
+console.log(result);

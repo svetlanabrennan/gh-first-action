@@ -52,13 +52,22 @@ jobs:
           echo "version: $APP_VERSION"
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
+      # - name: Run version update reusable workflow
+      #   id: run-reusable
+      #   uses: ./.github/actions/version-bump
+      #   with:
+      #     currentVersion: $APP_VERSION
+      #     currentAppVersion: $ORIGINAL_APP_VERSION
+      #     updatedAppVersion: $TEST_VERSION
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
       - name: Run version update reusable workflow
         id: run-reusable
-        uses: ./.github/actions/version-bump
-        with:
-          currentVersion: $APP_VERSION
-          currentAppVersion: $ORIGINAL_APP_VERSION
-          updatedAppVersion: $TEST_VERSION
+        run: node version-update-2.js --currentVersion $APP_VERSION --currentAppVersion $ORIGINAL_APP_VERSION --updatedAppVersion $TEST_VERSION
 
       - name: Set new version
         run: |
