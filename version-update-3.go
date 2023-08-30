@@ -45,8 +45,8 @@ func getVersionDifferenceTypeAndIncrement(version, current, updated string) stri
 
 func main() {
 	args := os.Args
-	fmt.Println("args are", args)
-	fmt.Println("arg length", len(args))
+	// fmt.Println("args are", args)
+	// fmt.Println("arg length", len(args))
 	if len(args) != 4 {
 		fmt.Println("Usage: program version current updated")
 		os.Exit(1)
